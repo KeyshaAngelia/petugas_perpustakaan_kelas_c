@@ -38,8 +38,9 @@ class LoginController extends GetxController {
       if (formkey.currentState!.validate()) {
         final response = await ApiProvider.instance().post(Endpoint.login,
             data: dio.FormData.fromMap(
-                {'username': usernameController.text.toString(),
-                  'password': passwordController.text.toString()}));
+                {
+                  "username": usernameController.text.toString(),
+                  "password": passwordController.text.toString()}));
         if (response.statusCode == 200) {
           await StorageProvider.write(StorageKey.status, 'logged');
           Get.offAllNamed(Routes.HOME);

@@ -1,33 +1,33 @@
 /// status : 200
 /// message : "success"
-/// DataPinjam : [{"id":1,"user_id":2,"book_id":1,"tanggal_pinjam":"2024-01-01 00:00:00","tanggal_kembali":"2024-01-10 00:00:00","status":"DIPINJAM","created_at":"2024-01-09T06:09:06.000000Z","updated_at":"2024-01-09T06:09:06.000000Z","user":{"id":2,"username":"said","nama":"said","telp":"085","alamat":"alamat","role":"PEMINJAM","created_at":"2024-01-09T05:36:44.000000Z","updated_at":"2024-01-09T05:36:44.000000Z"},"book":{"id":1,"kategori_id":1,"judul":"Belajar mengenal angka","penulis":"kusnaidi","penerbit":"PT alangka","tahun_terbit":2024,"created_at":"2024-01-09T05:43:09.000000Z","updated_at":"2024-01-09T05:43:09.000000Z"}}]
+/// data : [{"id":1,"user_id":2,"book_id":1,"tanggal_pinjam":"2024-01-01 00:00:00","tanggal_kembali":"2024-01-10 00:00:00","status":"DIPINJAM","created_at":"2024-01-09T06:09:06.000000Z","updated_at":"2024-01-09T06:09:06.000000Z","user":{"id":2,"username":"said","nama":"said","telp":"085","alamat":"alamat","role":"PEMINJAM","created_at":"2024-01-09T05:36:44.000000Z","updated_at":"2024-01-09T05:36:44.000000Z"},"book":{"id":1,"kategori_id":1,"judul":"Belajar mengenal angka","penulis":"kusnaidi","penerbit":"PT alangka","tahun_terbit":2024,"created_at":"2024-01-09T05:43:09.000000Z","updated_at":"2024-01-09T05:43:09.000000Z"}}]
 
 class ResponsePinjam {
   ResponsePinjam({
-      this.status, 
-      this.message, 
-      this.DataPinjam,});
+      this.status,
+      this.message,
+      this.data,});
 
   ResponsePinjam.fromJson(dynamic json) {
     status = json['status'];
     message = json['message'];
-    if (json['DataPinjam'] != null) {
-      DataPinjam = [];
-      json['DataPinjam'].forEach((v) {
-        DataPinjam?.add(Data.fromJson(v));
+    if (json['data'] != null) {
+      data = [];
+      json['data'].forEach((v) {
+        data?.add(DataPinjam.fromJson(v));
       });
     }
   }
   int? status;
   String? message;
-  List<Data>? DataPinjam;
+  List<DataPinjam>? data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['status'] = status;
     map['message'] = message;
-    if (DataPinjam != null) {
-      map['DataPinjam'] = DataPinjam?.map((v) => v.toJson()).toList();
+    if (data != null) {
+      map['data'] = data?.map((v) => v.toJson()).toList();
     }
     return map;
   }
@@ -45,8 +45,8 @@ class ResponsePinjam {
 /// user : {"id":2,"username":"said","nama":"said","telp":"085","alamat":"alamat","role":"PEMINJAM","created_at":"2024-01-09T05:36:44.000000Z","updated_at":"2024-01-09T05:36:44.000000Z"}
 /// book : {"id":1,"kategori_id":1,"judul":"Belajar mengenal angka","penulis":"kusnaidi","penerbit":"PT alangka","tahun_terbit":2024,"created_at":"2024-01-09T05:43:09.000000Z","updated_at":"2024-01-09T05:43:09.000000Z"}
 
-class Data {
-  Data({
+class DataPinjam {
+  DataPinjam({
       this.id, 
       this.userId, 
       this.bookId, 
@@ -58,7 +58,7 @@ class Data {
       this.user, 
       this.book,});
 
-  Data.fromJson(dynamic json) {
+  DataPinjam.fromJson(dynamic json) {
     id = json['id'];
     userId = json['user_id'];
     bookId = json['book_id'];
@@ -71,8 +71,8 @@ class Data {
     book = json['book'] != null ? Book.fromJson(json['book']) : null;
   }
   int? id;
-  int? userId;
-  int? bookId;
+  String? userId;
+  String? bookId;
   String? tanggalPinjam;
   String? tanggalKembali;
   String? status;
@@ -133,11 +133,11 @@ class Book {
     updatedAt = json['updated_at'];
   }
   int? id;
-  int? kategoriId;
+  String? kategoriId;
   String? judul;
   String? penulis;
   String? penerbit;
-  int? tahunTerbit;
+  String? tahunTerbit;
   String? createdAt;
   String? updatedAt;
 

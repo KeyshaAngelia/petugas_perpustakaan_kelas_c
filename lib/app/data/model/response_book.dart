@@ -1,33 +1,33 @@
 /// status : 200
 /// message : "success"
-/// DataBook : [{"id":1,"kategori_id":1,"judul":"Belajar mengenal angka","penulis":"kusnaidi","penerbit":"PT alangka","tahun_terbit":2024,"created_at":"2024-01-09T05:43:09.000000Z","updated_at":"2024-01-09T05:43:09.000000Z","kategori":{"id":1,"nama":"umum"}}]
+/// data : [{"id":1,"kategori_id":1,"judul":"Belajar mengenal angka","penulis":"kusnaidi","penerbit":"PT alangka","tahun_terbit":2024,"created_at":"2024-01-09T05:43:09.000000Z","updated_at":"2024-01-09T05:43:09.000000Z","kategori":{"id":1,"nama":"umum"}}]
 
 class ResponseBook {
   ResponseBook({
       this.status, 
       this.message, 
-      this.DataBook,});
+      this.data,});
 
   ResponseBook.fromJson(dynamic json) {
     status = json['status'];
     message = json['message'];
-    if (json['DataBook'] != null) {
-      DataBook = [];
-      json['DataBook'].forEach((v) {
-        DataBook?.add(Data.fromJson(v));
+    if (json['data'] != null) {
+      data = [];
+      json['data'].forEach((v) {
+        data?.add(DataBook.fromJson(v));
       });
     }
   }
   int? status;
   String? message;
-  List<Data>? DataBook;
+  List<DataBook>? data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['status'] = status;
     map['message'] = message;
-    if (DataBook != null) {
-      map['DataBook'] = DataBook?.map((v) => v.toJson()).toList();
+    if (data != null) {
+      map['data'] = data?.map((v) => v.toJson()).toList();
     }
     return map;
   }
@@ -44,8 +44,8 @@ class ResponseBook {
 /// updated_at : "2024-01-09T05:43:09.000000Z"
 /// kategori : {"id":1,"nama":"umum"}
 
-class Data {
-  Data({
+class DataBook {
+  DataBook({
       this.id, 
       this.kategoriId, 
       this.judul, 
@@ -56,7 +56,7 @@ class Data {
       this.updatedAt, 
       this.kategori,});
 
-  Data.fromJson(dynamic json) {
+  DataBook.fromJson(dynamic json) {
     id = json['id'];
     kategoriId = json['kategori_id'];
     judul = json['judul'];
@@ -68,11 +68,11 @@ class Data {
     kategori = json['kategori'] != null ? Kategori.fromJson(json['kategori']) : null;
   }
   int? id;
-  int? kategoriId;
+  String? kategoriId;
   String? judul;
   String? penulis;
   String? penerbit;
-  int? tahunTerbit;
+  String? tahunTerbit;
   String? createdAt;
   String? updatedAt;
   Kategori? kategori;

@@ -6,6 +6,7 @@ import 'package:petugas_perpustakaan_kelas_c/app/data/constant/endpoint.dart';
 import 'package:petugas_perpustakaan_kelas_c/app/data/provider/app_provider.dart';
 import 'package:petugas_perpustakaan_kelas_c/app/data/provider/storage_provider.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:petugas_perpustakaan_kelas_c/app/modules/book/controllers/book_controller.dart';
 import '../../../routes/app_pages.dart';
 
 class AddBookController extends GetxController {
@@ -15,6 +16,8 @@ class AddBookController extends GetxController {
   final TextEditingController penerbitController = TextEditingController();
   final TextEditingController tahunTerbitController = TextEditingController();
   final loading = false.obs;
+  final count = 0.obs;
+  final BookController _bookController = Get.find();
 
   @override
   void onInit() {
@@ -43,12 +46,12 @@ class AddBookController extends GetxController {
                     "penerbit": penerbitController.text.toString(),
                     "tahun_terbit": int.parse(tahunTerbitController.text.toString()),
       });
-          if (response.statusCode == 200) {
-            await StorageProvider.write(StorageKey.status, 'logged');
-            Get.offAllNamed(Routes.HOME);
+          if (response.statusCode == 201) {
+            _bookController.getData();
+            Get.back();
           } else {
             Get.snackbar(
-                'Sorry', 'Add Gagal', backgroundColor: Colors.orange);
+                "Sorry", "Add Gagal", backgroundColor: Colors.orange);
           }
         }
         loading(false);
@@ -56,15 +59,15 @@ class AddBookController extends GetxController {
         loading(false);
         if (e.response != null) {
           if (e.response?.data != null) {
-            Get.snackbar('Sorry', '${e.response?.data['message']}',
+            Get.snackbar("Sorry", '${e.response?.data['message']}',
                 backgroundColor: Colors.orange);
           }
         } else {
-          Get.snackbar('Sorry', e.message ?? '', backgroundColor: Colors.red);
+          Get.snackbar("Sorry", e.message ?? '', backgroundColor: Colors.red);
         }
       } catch (e) {
         loading(false);
-        Get.snackbar('Error', e.toString(), backgroundColor: Colors.red);
+        Get.snackbar("Error", e.toString(), backgroundColor: Colors.red);
       }
     }
   }
